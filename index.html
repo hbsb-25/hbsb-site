@@ -12,26 +12,29 @@
             color: #333;
             text-align: center;
         }
+
         header {
-            background-color: #4CAF50; /* Verde */
+            background-color: #4CAF50;
             color: white;
             padding: 20px 10px;
         }
+
         img {
             max-width: 300px;
             margin-top: 20px;
         }
+
         section {
             padding: 20px;
         }
+
         footer {
-            background-color: #4CAF50; /* Verde */
+            background-color: #4CAF50;
             color: white;
             padding: 10px;
             font-size: 14px;
         }
 
-        /* Layout de duas colunas */
         .container {
             display: flex;
             flex-wrap: wrap;
@@ -49,20 +52,64 @@
 
         .right-column {
             flex: 1;
-            min-width: 250px;
+            min-width: 300px;
             background-color: #e6f4ea;
             padding: 20px;
             border-radius: 10px;
+            text-align: center;
+        }
+
+        .right-column img {
+            max-width: 200px;
+            margin-bottom: 10px;
         }
 
         .right-column h3 {
             color: #4CAF50;
-            margin-top: 0;
-            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .agenda-banner {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+            padding: 8px 16px;
+            display: inline-block;
+            border-radius: 5px;
+            margin: 10px auto 20px auto;
+            font-size: 14px;
         }
 
         .agenda-item {
-            margin-bottom: 10px;
+            text-align: left;
+            border-left: 5px solid #e60000;
+            padding-left: 15px;
+            margin-bottom: 20px;
+        }
+
+        .agenda-item .nome {
+            font-weight: bold;
+            color: #b30000;
+            font-size: 16px;
+        }
+
+        .agenda-item .especialidade {
+            font-size: 14px;
+            color: #c94c4c;
+            margin-left: 5px;
+        }
+
+        .agenda-item .dia,
+        .agenda-item .horario {
+            font-size: 14px;
+            margin-top: 3px;
+        }
+
+        .footer-info {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 14px;
         }
 
         .contact {
@@ -112,14 +159,39 @@
             </div>
         </div>
 
-        <!-- Coluna da direita (Agenda) -->
+        <!-- Coluna da direita (Agenda Médica) -->
         <div class="right-column">
-            <h3>Agenda</h3>
-            <div class="agenda-item"><strong>Segunda:</strong> Dr. </div>
-            <div class="agenda-item"><strong>Terça:</strong> Dr. </div>
-            <div class="agenda-item"><strong>Quarta:</strong> Dr. </div>
-            <div class="agenda-item"><strong>Quinta:</strong> Dr. </div>
-            <div class="agenda-item"><strong>Sexta:</strong> Dr. </div>
+            <img src="logo-policlinica.jpeg" alt="Policlínica Saúde Bernardina" />
+            <h3>Agenda da Semana</h3>
+            <div class="agenda-banner">AGENDA DISPONÍVEL</div>
+
+            <div class="agenda-item">
+                <div class="nome">Dr. Ubahihara Vieira <span class="especialidade">Oftalmologista</span></div>
+                <div class="dia">Terça-feira</div>
+                <div class="horario">Horário: 08h30 às 11h</div>
+            </div>
+
+            <div class="agenda-item">
+                <div class="nome">Dra. Daiana Appel <span class="especialidade">Clínica Geral</span></div>
+                <div class="dia">Terça-feira</div>
+                <div class="horario">Horário: 17h às 19h</div>
+            </div>
+
+            <div class="agenda-item">
+                <div class="nome">Dr. Guilherme Bastistella <span class="especialidade">Clínica Geral</span></div>
+                <div class="dia">Quinta-feira</div>
+                <div class="horario">Horário: 08h às 11h30</div>
+            </div>
+
+            <div class="agenda-item">
+                <div class="nome">Dra. Ana Carolina Scherer <span class="especialidade">Clínica Geral</span></div>
+                <div class="dia">Quinta-feira</div>
+                <div class="horario">Horário: 17h às 19h</div>
+            </div>
+
+            <div class="footer-info">
+                Atendimentos para particulares, convênios e cartões de desconto
+            </div>
         </div>
     </section>
 
@@ -128,4 +200,3 @@
     </footer>
 </body>
 </html>
-
