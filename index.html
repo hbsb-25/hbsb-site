@@ -12,15 +12,18 @@
       color: #333;
       text-align: center;
     }
+
     header {
       background-color: #4CAF50;
       color: white;
       padding: 20px 10px;
     }
+
     header img {
       max-width: 300px;
       margin-top: 10px;
     }
+
     .container {
       display: flex;
       flex-wrap: wrap;
@@ -31,24 +34,30 @@
       margin: 0 auto;
       text-align: left;
     }
+
     .left-column, .right-column {
       flex: 1;
       min-width: 300px;
     }
+
     .right-column {
       background-color: #e6f4ea;
       padding: 20px;
       border-radius: 10px;
       text-align: center;
     }
+
     .right-column img {
-      max-width: 200px;
+      max-width: 100%;
+      height: auto;
       margin-bottom: 10px;
     }
+
     .right-column h3 {
       color: #4CAF50;
       margin: 10px 0;
     }
+
     .agenda-banner {
       background-color: #4CAF50;
       color: white;
@@ -59,15 +68,18 @@
       margin-bottom: 20px;
       font-size: 14px;
     }
+
     .footer-info {
       margin-top: 20px;
       font-weight: bold;
       font-size: 14px;
     }
+
     .contact {
       margin-top: 30px;
       font-size: 18px;
     }
+
     .contact img {
       max-width: 300px;
       margin-top: 15px;
@@ -75,31 +87,46 @@
       margin-left: auto;
       margin-right: auto;
     }
-    /* Estilo da tabela */
+
+    /* Tabela */
+    #agenda-container {
+      overflow-x: auto;
+      margin-top: 20px;
+    }
+
     #agenda-table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 20px;
+      min-width: 500px;
     }
+
     #agenda-table th, #agenda-table td {
       border: 1px solid #ddd;
       padding: 8px;
       text-align: left;
     }
+
     #agenda-table th {
       background-color: #4CAF50;
       color: white;
     }
+
     #agenda-table tr:nth-child(even) {
       background-color: #f2f2f2;
     }
+
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
         align-items: center;
       }
+
       .left-column, .right-column {
         width: 90%;
+      }
+
+      .right-column img {
+        max-width: 150px;
       }
     }
   </style>
@@ -108,9 +135,11 @@
   <header>
     <h1>Hospital Bernardina Salles de Barros</h1>
   </header>
+
   <img src="logo-90anos.jpeg" alt="Logo do Hospital" />
 
   <section class="container">
+    <!-- Coluna da esquerda -->
     <div class="left-column">
       <h2>Quem Somos:</h2>
       <p>Atendimentos de Urgência e Emergência</p>
@@ -123,14 +152,27 @@
       </div>
     </div>
 
+    <!-- Coluna da direita -->
     <div class="right-column">
       <img src="logo-policlinica.jpeg" alt="Policlínica Saúde Bernardina" />
       <h3>Agenda da Semana</h3>
       <div class="agenda-banner">AGENDA DISPONÍVEL</div>
 
-      <!-- Aqui vai a tabela que será preenchida via JS -->
+      <!-- Tabela carregada via JavaScript -->
       <div id="agenda-container">
-        <p>Carregando agenda...</p>
+        <table id="agenda-table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Especialidade</th>
+              <th>Data</th>
+              <th>Horário</th>
+            </tr>
+          </thead>
+          <tbody id="agenda-body">
+            <!-- Conteúdo será inserido via JS -->
+          </tbody>
+        </table>
       </div>
 
       <div class="footer-info">
@@ -139,76 +181,31 @@
     </div>
   </section>
 
+  <!-- Script para buscar dados da planilha -->
   <script>
-    // URL da planilha publicada como CSV
-    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR2KQkbwGCLvtwLqG_Am7_jdvB4D2XOJFNlS2JzI-Uw3BpOgW-L32AvmWd0obuOK-zx9yi3-BWY9moe/pub?gid=0&single=true&output=csv';
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR2KQkbwGCLvtwLqG_Am7_jdvB4D2XOJFNlS2JzI-Uw3BpOgW-L32AvmWd0obuOK-zx9yi3-BWY9moe/pub?gid=0&single=true&output=csv';
 
-    // Função para converter CSV para array de objetos
-    function csvToArray(csv, delimiter = ',') {
-      const lines = csv.trim().split('\n');
-      const headers = lines.shift().split(delimiter).map(h => h.trim());
-      return lines.map(line => {
-        const values = line.split(delimiter);
-        return headers.reduce((obj, header, i) => {
-          obj[header] = values[i].trim();
-          return obj;
-        }, {});
+    async function carregarAgenda() {
+      const response = await fetch(CSV_URL);
+      const texto = await response.text();
+      const linhas = texto.split('\n').slice(1); // Pula o cabeçalho
+      const tbody = document.getElementById('agenda-body');
+
+      linhas.forEach(linha => {
+        const colunas = linha.split(',');
+        if (colunas.length >= 4) {
+          const tr = document.createElement('tr');
+          colunas.slice(0, 4).forEach(texto => {
+            const td = document.createElement('td');
+            td.textContent = texto.trim();
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
+        }
       });
     }
 
-    // Função para montar a tabela HTML
-    function montarTabela(dados) {
-      if (!dados.length) {
-        document.getElementById('agenda-container').innerHTML = '<p>Agenda vazia.</p>';
-        return;
-      }
-
-      const tabela = document.createElement('table');
-      tabela.id = 'agenda-table';
-
-      // Cabeçalho
-      const thead = document.createElement('thead');
-      const trHead = document.createElement('tr');
-      Object.keys(dados[0]).forEach(col => {
-        const th = document.createElement('th');
-        th.textContent = col;
-        trHead.appendChild(th);
-      });
-      thead.appendChild(trHead);
-      tabela.appendChild(thead);
-
-      // Corpo da tabela
-      const tbody = document.createElement('tbody');
-      dados.forEach(linha => {
-        const tr = document.createElement('tr');
-        Object.values(linha).forEach(valor => {
-          const td = document.createElement('td');
-          td.textContent = valor;
-          tr.appendChild(td);
-        });
-        tbody.appendChild(tr);
-      });
-      tabela.appendChild(tbody);
-
-      // Inserir tabela no container
-      const container = document.getElementById('agenda-container');
-      container.innerHTML = '';
-      container.appendChild(tabela);
-    }
-
-    // Buscar CSV e mostrar tabela
-    fetch(SHEET_CSV_URL)
-      .then(response => {
-        if (!response.ok) throw new Error('Erro ao carregar a agenda.');
-        return response.text();
-      })
-      .then(csv => {
-        const dados = csvToArray(csv);
-        montarTabela(dados);
-      })
-      .catch(err => {
-        document.getElementById('agenda-container').innerHTML = `<p style="color:red;">${err.message}</p>`;
-      });
+    carregarAgenda();
   </script>
 </body>
 </html>
