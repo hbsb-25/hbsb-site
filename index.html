@@ -75,6 +75,24 @@
       margin-left: auto;
       margin-right: auto;
     }
+    /* Estilo da tabela */
+    #agenda-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    #agenda-table th, #agenda-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    #agenda-table th {
+      background-color: #4CAF50;
+      color: white;
+    }
+    #agenda-table tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
@@ -110,18 +128,87 @@
       <h3>Agenda da Semana</h3>
       <div class="agenda-banner">AGENDA DISPONÍVEL</div>
 
-      <!-- IFRAME incorporado da planilha -->
-      <iframe 
-        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vR2KQkbwGCLvtwLqG_Am7_jdvB4D2XOJFNlS2JzI-Uw3BpOgW-L32AvmWd0obuOK-zx9yi3-BWY9moe/pubhtml?widget=true&amp;headers=false" 
-        width="100%" 
-        height="400" 
-        style="border:none; border-radius: 8px;">
-      </iframe>
+      <!-- Aqui vai a tabela que será preenchida via JS -->
+      <div id="agenda-container">
+        <p>Carregando agenda...</p>
+      </div>
 
       <div class="footer-info">
         Atendimentos para particulares, convênios e cartões de desconto
       </div>
     </div>
   </section>
+
+  <script>
+    // URL da planilha publicada como CSV
+    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR2KQkbwGCLvtwLqG_Am7_jdvB4D2XOJFNlS2JzI-Uw3BpOgW-L32AvmWd0obuOK-zx9yi3-BWY9moe/pub?gid=0&single=true&output=csv';
+
+    // Função para converter CSV para array de objetos
+    function csvToArray(csv, delimiter = ',') {
+      const lines = csv.trim().split('\n');
+      const headers = lines.shift().split(delimiter).map(h => h.trim());
+      return lines.map(line => {
+        const values = line.split(delimiter);
+        return headers.reduce((obj, header, i) => {
+          obj[header] = values[i].trim();
+          return obj;
+        }, {});
+      });
+    }
+
+    // Função para montar a tabela HTML
+    function montarTabela(dados) {
+      if (!dados.length) {
+        document.getElementById('agenda-container').innerHTML = '<p>Agenda vazia.</p>';
+        return;
+      }
+
+      const tabela = document.createElement('table');
+      tabela.id = 'agenda-table';
+
+      // Cabeçalho
+      const thead = document.createElement('thead');
+      const trHead = document.createElement('tr');
+      Object.keys(dados[0]).forEach(col => {
+        const th = document.createElement('th');
+        th.textContent = col;
+        trHead.appendChild(th);
+      });
+      thead.appendChild(trHead);
+      tabela.appendChild(thead);
+
+      // Corpo da tabela
+      const tbody = document.createElement('tbody');
+      dados.forEach(linha => {
+        const tr = document.createElement('tr');
+        Object.values(linha).forEach(valor => {
+          const td = document.createElement('td');
+          td.textContent = valor;
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+      tabela.appendChild(tbody);
+
+      // Inserir tabela no container
+      const container = document.getElementById('agenda-container');
+      container.innerHTML = '';
+      container.appendChild(tabela);
+    }
+
+    // Buscar CSV e mostrar tabela
+    fetch(SHEET_CSV_URL)
+      .then(response => {
+        if (!response.ok) throw new Error('Erro ao carregar a agenda.');
+        return response.text();
+      })
+      .then(csv => {
+        const dados = csvToArray(csv);
+        montarTabela(dados);
+      })
+      .catch(err => {
+        document.getElementById('agenda-container').innerHTML = `<p style="color:red;">${err.message}</p>`;
+      });
+  </script>
 </body>
 </html>
