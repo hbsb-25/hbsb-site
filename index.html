@@ -35,9 +35,6 @@
       flex: 1;
       min-width: 300px;
     }
-    .left-column {
-      /* manter estilo original */
-    }
     .right-column {
       background-color: #e6f4ea;
       padding: 20px;
@@ -61,26 +58,6 @@
       border-radius: 5px;
       margin-bottom: 20px;
       font-size: 14px;
-    }
-    .agenda-item {
-      text-align: left;
-      border-left: 5px solid #e60000;
-      padding-left: 15px;
-      margin-bottom: 20px;
-    }
-    .agenda-item .nome {
-      font-weight: bold;
-      color: #b30000;
-      font-size: 16px;
-    }
-    .agenda-item .especialidade {
-      font-size: 14px;
-      color: #c94c4c;
-      margin-left: 5px;
-    }
-    .agenda-item .dia, .agenda-item .horario {
-      font-size: 14px;
-      margin-top: 3px;
     }
     .footer-info {
       margin-top: 20px;
@@ -132,40 +109,19 @@
       <img src="logo-policlinica.jpeg" alt="Policlínica Saúde Bernardina" />
       <h3>Agenda da Semana</h3>
       <div class="agenda-banner">AGENDA DISPONÍVEL</div>
-      <div id="agenda"></div>
+
+      <!-- IFRAME incorporado da planilha -->
+      <iframe 
+        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vR2KQkbwGCLvtwLqG_Am7_jdvB4D2XOJFNlS2JzI-Uw3BpOgW-L32AvmWd0obuOK-zx9yi3-BWY9moe/pubhtml?widget=true&amp;headers=false" 
+        width="100%" 
+        height="400" 
+        style="border:none; border-radius: 8px;">
+      </iframe>
+
       <div class="footer-info">
         Atendimentos para particulares, convênios e cartões de desconto
       </div>
     </div>
   </section>
-
-  <script>
-    const SHEET_ID = '2PACX-1vR2KQkbwGCLvtwLqG_Am7_jdvB4D2XOJFNlS2JzI-Uw3BpOgW-L32AvmWd0obuOK-zx9yi3-BWY9moe';
-    const SHEET_URL = `https://opensheet.elk.sh/${SHEET_ID}/Página1`;
-
-    async function carregarAgenda() {
-      const agendaDiv = document.getElementById('agenda');
-      try {
-        const response = await fetch(SHEET_URL);
-        const data = await response.json();
-
-        data.forEach(item => {
-          const bloco = document.createElement('div');
-          bloco.className = 'agenda-item';
-          bloco.innerHTML = `
-            <div class="nome">${item.Nome} <span class="especialidade">${item.Especialidade}</span></div>
-            <div class="dia">${item.Data}</div>
-            <div class="horario">Horário: ${item.Horário}</div>
-          `;
-          agendaDiv.appendChild(bloco);
-        });
-      } catch (err) {
-        agendaDiv.innerHTML = "<p>Não foi possível carregar a agenda.</p>";
-        console.error(err);
-      }
-    }
-
-    carregarAgenda();
-  </script>
 </body>
 </html>
