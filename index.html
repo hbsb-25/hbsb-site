@@ -7,7 +7,8 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       background-color: #ffffff;
       color: #333;
       text-align: center;
@@ -19,9 +20,35 @@
       padding: 20px 10px;
     }
 
-    header img {
-      max-width: 300px;
-      margin-top: 10px;
+    .logo-area {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .logo-area img {
+      height: auto;
+    }
+
+    .logo-hbsb {
+      max-width: 150px;
+    }
+
+    .logo-hospital {
+      max-width: 200px;
+    }
+
+    .logo-90anos {
+      max-width: 120px;
+    }
+
+    @media (max-width: 768px) {
+      .logo-90anos {
+        max-width: 80px;
+      }
     }
 
     .container {
@@ -35,7 +62,8 @@
       text-align: left;
     }
 
-    .left-column, .right-column {
+    .left-column,
+    .right-column {
       flex: 1;
       min-width: 300px;
     }
@@ -48,8 +76,7 @@
     }
 
     .right-column img {
-      max-width: 100%;
-      height: auto;
+      max-width: 200px;
       margin-bottom: 10px;
     }
 
@@ -88,31 +115,12 @@
       margin-right: auto;
     }
 
-    /* Tabela */
-    #agenda-container {
-      overflow-x: auto;
-      margin-top: 20px;
-    }
-
-    #agenda-table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 500px;
-    }
-
-    #agenda-table th, #agenda-table td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-
-    #agenda-table th {
-      background-color: #4CAF50;
-      color: white;
-    }
-
-    #agenda-table tr:nth-child(even) {
+    footer {
+      margin-top: 50px;
+      padding: 20px;
       background-color: #f2f2f2;
+      font-size: 14px;
+      color: #666;
     }
 
     @media (max-width: 768px) {
@@ -121,29 +129,33 @@
         align-items: center;
       }
 
-      .left-column, .right-column {
+      .left-column,
+      .right-column {
         width: 90%;
-      }
-
-      .right-column img {
-        max-width: 150px;
       }
     }
   </style>
 </head>
 <body>
+
   <header>
     <h1>Hospital Bernardina Salles de Barros</h1>
   </header>
 
-  <img src="logo-90anos.jpeg" alt="Logo do Hospital" />
+  <!-- 🔁 LOGOS ALINHADAS -->
+  <div class="logo-area">
+    <img src="logo-hbsb.jpeg" alt="Logo HBSB" class="logo-hbsb" />
+    <img src="hospital-bernardina.jpeg" alt="Hospital Bernardina" class="logo-hospital" />
+    <img src="logo-90anos.jpeg" alt="Logo 90 Anos" class="logo-90anos" />
+  </div>
 
   <section class="container">
-    <!-- Coluna da esquerda -->
+    <!-- ℹ️ Coluna Esquerda -->
     <div class="left-column">
       <h2>Quem Somos:</h2>
       <p>Atendimentos de Urgência e Emergência</p>
       <p>Exames: Ultrassonografia, Raio‑X, Tomografia, Densitometria, Endoscopia, Mamografia, Eletrocardiograma, MAPA, Holter e Teste Ergométrico.</p>
+
       <div class="contact">
         <p><strong>Localização:</strong> Júlio de Castilhos – RS</p>
         <p><strong>Email:</strong> ti@hbsb.com.br</p>
@@ -152,28 +164,19 @@
       </div>
     </div>
 
-    <!-- Coluna da direita -->
+    <!-- 📆 Coluna Direita -->
     <div class="right-column">
       <img src="logo-policlinica.jpeg" alt="Policlínica Saúde Bernardina" />
       <h3>Agenda da Semana</h3>
       <div class="agenda-banner">AGENDA DISPONÍVEL</div>
 
-      <!-- Tabela carregada via JavaScript -->
-      <div id="agenda-container">
-        <table id="agenda-table">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Especialidade</th>
-              <th>Data</th>
-              <th>Horário</th>
-            </tr>
-          </thead>
-          <tbody id="agenda-body">
-            <!-- Conteúdo será inserido via JS -->
-          </tbody>
-        </table>
-      </div>
+      <!-- 🔗 IFRAME da planilha do Google -->
+      <iframe 
+        src="https://docs.google.com/spreadsheets/d/e/2PACX-1vR2KQkbwGCLvtwLqG_Am7_jdvB4D2XOJFNlS2JzI-Uw3BpOgW-L32AvmWd0obuOK-zx9yi3-BWY9moe/pubhtml?widget=true&amp;headers=false" 
+        width="100%" 
+        height="400" 
+        style="border:none; border-radius: 8px;">
+      </iframe>
 
       <div class="footer-info">
         Atendimentos para particulares, convênios e cartões de desconto
@@ -181,31 +184,10 @@
     </div>
   </section>
 
-  <!-- Script para buscar dados da planilha -->
-  <script>
-    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR2KQkbwGCLvtwLqG_Am7_jdvB4D2XOJFNlS2JzI-Uw3BpOgW-L32AvmWd0obuOK-zx9yi3-BWY9moe/pub?gid=0&single=true&output=csv';
+  <!-- ⚠️ Rodapé -->
+  <footer>
+    © 2025 Hospital Bernardina Salles de Barros – Todos os direitos reservados.
+  </footer>
 
-    async function carregarAgenda() {
-      const response = await fetch(CSV_URL);
-      const texto = await response.text();
-      const linhas = texto.split('\n').slice(1); // Pula o cabeçalho
-      const tbody = document.getElementById('agenda-body');
-
-      linhas.forEach(linha => {
-        const colunas = linha.split(',');
-        if (colunas.length >= 4) {
-          const tr = document.createElement('tr');
-          colunas.slice(0, 4).forEach(texto => {
-            const td = document.createElement('td');
-            td.textContent = texto.trim();
-            tr.appendChild(td);
-          });
-          tbody.appendChild(tr);
-        }
-      });
-    }
-
-    carregarAgenda();
-  </script>
 </body>
 </html>
