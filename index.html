@@ -1,202 +1,171 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Hospital Bernardina Salles de Barros</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0; padding: 0;
-            background-color: #ffffff;
-            color: #333;
-            text-align: center;
-        }
-
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 20px 10px;
-        }
-
-        img {
-            max-width: 300px;
-            margin-top: 20px;
-        }
-
-        section {
-            padding: 20px;
-        }
-
-        footer {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px;
-            font-size: 14px;
-        }
-
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: left;
-        }
-
-        .left-column {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .right-column {
-            flex: 1;
-            min-width: 300px;
-            background-color: #e6f4ea;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .right-column img {
-            max-width: 200px;
-            margin-bottom: 10px;
-        }
-
-        .right-column h3 {
-            color: #4CAF50;
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-
-        .agenda-banner {
-            background-color: #4CAF50;
-            color: white;
-            font-weight: bold;
-            padding: 8px 16px;
-            display: inline-block;
-            border-radius: 5px;
-            margin: 10px auto 20px auto;
-            font-size: 14px;
-        }
-
-        .agenda-item {
-            text-align: left;
-            border-left: 5px solid #e60000;
-            padding-left: 15px;
-            margin-bottom: 20px;
-        }
-
-        .agenda-item .nome {
-            font-weight: bold;
-            color: #b30000;
-            font-size: 16px;
-        }
-
-        .agenda-item .especialidade {
-            font-size: 14px;
-            color: #c94c4c;
-            margin-left: 5px;
-        }
-
-        .agenda-item .dia,
-        .agenda-item .horario {
-            font-size: 14px;
-            margin-top: 3px;
-        }
-
-        .footer-info {
-            margin-top: 20px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .contact {
-            margin-top: 30px;
-            font-size: 18px;
-        }
-
-        .contact img {
-            max-width: 300px;
-            margin-top: 15px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .left-column, .right-column {
-                width: 90%;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hospital Bernardina — Agenda Médica</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background-color: #ffffff;
+      color: #333;
+      text-align: center;
+    }
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 20px 10px;
+    }
+    header img {
+      max-width: 300px;
+      margin-top: 10px;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 40px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .left-column, .right-column {
+      flex: 1;
+      min-width: 300px;
+    }
+    .left-column {
+      /* manter estilo original */
+    }
+    .right-column {
+      background-color: #e6f4ea;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    .right-column img {
+      max-width: 200px;
+      margin-bottom: 10px;
+    }
+    .right-column h3 {
+      color: #4CAF50;
+      margin: 10px 0;
+    }
+    .agenda-banner {
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+      padding: 8px 16px;
+      display: inline-block;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .agenda-item {
+      text-align: left;
+      border-left: 5px solid #e60000;
+      padding-left: 15px;
+      margin-bottom: 20px;
+    }
+    .agenda-item .nome {
+      font-weight: bold;
+      color: #b30000;
+      font-size: 16px;
+    }
+    .agenda-item .especialidade {
+      font-size: 14px;
+      color: #c94c4c;
+      margin-left: 5px;
+    }
+    .agenda-item .dia, .agenda-item .horario {
+      font-size: 14px;
+      margin-top: 3px;
+    }
+    .footer-info {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .contact {
+      margin-top: 30px;
+      font-size: 18px;
+    }
+    .contact img {
+      max-width: 300px;
+      margin-top: 15px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .left-column, .right-column {
+        width: 90%;
+      }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Hospital Bernardina Salles de Barros</h1>
-    </header>
+  <header>
+    <h1>Hospital Bernardina Salles de Barros</h1>
+  </header>
+  <img src="logo-90anos.jpeg" alt="Logo do Hospital" />
 
-    <img src="logo-90anos.jpeg" alt="Logo do Hospital" />
+  <section class="container">
+    <div class="left-column">
+      <h2>Quem Somos:</h2>
+      <p>Atendimentos de Urgência e Emergência</p>
+      <p>Exames: Ultrassonografia, Raio‑X, Tomografia, Densitometria, Endoscopia, Mamografia, Eletrocardiograma, MAPA, Holter e Teste Ergométrico.</p>
+      <div class="contact">
+        <p><strong>Localização:</strong> Júlio de Castilhos – RS</p>
+        <p><strong>Email:</strong> ti@hbsb.com.br</p>
+        <p><strong>Telefone:</strong> (55) 99950‑4901</p>
+        <img src="cartao-saude.jpeg" alt="Dados do Convênio" />
+      </div>
+    </div>
 
-    <section class="container">
-        <!-- Coluna da esquerda -->
-        <div class="left-column">
-            <h2>Quem Somos:</h2>
-            <p>Atendimentos de Urgência e Emergência</p>
-            <p>Exames: Ultrassonografia, Raio-X, Tomografia, Densitometria, Endoscopia, Mamografia, Eletrocardiograma, MAPA, Holter e Teste Ergométrico.</p>
+    <div class="right-column">
+      <img src="logo-policlinica.jpeg" alt="Policlínica Saúde Bernardina" />
+      <h3>Agenda da Semana</h3>
+      <div class="agenda-banner">AGENDA DISPONÍVEL</div>
+      <div id="agenda"></div>
+      <div class="footer-info">
+        Atendimentos para particulares, convênios e cartões de desconto
+      </div>
+    </div>
+  </section>
 
-            <div class="contact">
-                <p><strong>Localização:</strong> Júlio de Castilhos – RS</p>
-                <p><strong>Email:</strong> ti@hbsb.com.br</p>
-                <p><strong>Telefone:</strong> (55) 99950-4901</p>
-                <img src="cartao-saude.jpeg" alt="Dados do Convênio" />
-            </div>
-        </div>
+  <script>
+    const SHEET_ID = '2PACX-1vR2KQkbwGCLvtwLqG_Am7_jdvB4D2XOJFNlS2JzI-Uw3BpOgW-L32AvmWd0obuOK-zx9yi3-BWY9moe';
+    const SHEET_URL = `https://opensheet.elk.sh/${SHEET_ID}/Página1`;
 
-        <!-- Coluna da direita (Agenda Médica) -->
-        <div class="right-column">
-            <img src="logo-policlinica.jpeg" alt="Policlínica Saúde Bernardina" />
-            <h3>Agenda da Semana</h3>
-            <div class="agenda-banner">AGENDA DISPONÍVEL</div>
+    async function carregarAgenda() {
+      const agendaDiv = document.getElementById('agenda');
+      try {
+        const response = await fetch(SHEET_URL);
+        const data = await response.json();
 
-            <div class="agenda-item">
-                <div class="nome">Dr. Ubahihara Vieira <span class="especialidade">Oftalmologista</span></div>
-                <div class="dia">Terça-feira</div>
-                <div class="horario">Horário: 08h30 às 11h</div>
-            </div>
+        data.forEach(item => {
+          const bloco = document.createElement('div');
+          bloco.className = 'agenda-item';
+          bloco.innerHTML = `
+            <div class="nome">${item.Nome} <span class="especialidade">${item.Especialidade}</span></div>
+            <div class="dia">${item.Data}</div>
+            <div class="horario">Horário: ${item.Horário}</div>
+          `;
+          agendaDiv.appendChild(bloco);
+        });
+      } catch (err) {
+        agendaDiv.innerHTML = "<p>Não foi possível carregar a agenda.</p>";
+        console.error(err);
+      }
+    }
 
-            <div class="agenda-item">
-                <div class="nome">Dra. Daiana Appel <span class="especialidade">Clínica Geral</span></div>
-                <div class="dia">Terça-feira</div>
-                <div class="horario">Horário: 17h às 19h</div>
-            </div>
-
-            <div class="agenda-item">
-                <div class="nome">Dr. Guilherme Bastistella <span class="especialidade">Clínica Geral</span></div>
-                <div class="dia">Quinta-feira</div>
-                <div class="horario">Horário: 08h às 11h30</div>
-            </div>
-
-            <div class="agenda-item">
-                <div class="nome">Dra. Ana Carolina Scherer <span class="especialidade">Clínica Geral</span></div>
-                <div class="dia">Quinta-feira</div>
-                <div class="horario">Horário: 17h às 19h</div>
-            </div>
-
-            <div class="footer-info">
-                Atendimentos para particulares, convênios e cartões de desconto
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        &copy; 2025 Hospital Bernardina Salles de Barros. Todos os direitos reservados.
-    </footer>
+    carregarAgenda();
+  </script>
 </body>
 </html>
